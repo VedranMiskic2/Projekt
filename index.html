@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Mjesta koje smo posjetili ❤️</title>
     <meta charset="utf-8" />
-    
-    
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
     <style>
@@ -13,71 +13,81 @@
         }
     </style>
 </head>
+
 <body>
 
-<div id="map"></div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <script>
+
+        var bounds = [
+            [42.3, 13.4],
+            [46.6, 19.5]
+        ];
+
+        var map = L.map('map', {
+            maxBounds: bounds,
+            maxBoundsViscosity: 1.0
+        }).setView([45.1, 15.2], 7);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        var gradovi = [
+
+            //TIPS: možda promijeniti boju lokacije po gradovima/po najčešćim lokacijama koje smo posjetili.
+
+            //#1.
+            { ime: "Jankovcima", lat: 45.25468, lng: 18.91118, opis: "Dan za sjećanje...", ikona: "💓" },
+            { ime: "Donjim Adnrijevcima", lat: 45.18769, lng: 18.29701, opis: "Kraj križnog puta (09:30 - 18:00), 28km", ikona: "🕆" },
+            { ime: "Slavonskom Brodu", lat: 45.15636, lng: 18.00701, opis: "Početak 20. Nadbiskupijskog križnog puta za mlade (21.3.2026.)", ikona: "🕆" },
+
+            //VINKOVCI
+            { ime: "Vinkovcima", lat: 45.29145, lng: 18.80284, opis: "Restoran San", ikona: "🍕🍴" },
+            { ime: "Vinkovcima", lat: 45.28511, lng: 18.79839, opis: "HNK Vinkovci", ikona: "⚽" },
+            { ime: "Vinkovcima", lat: 45.28911, lng: 18.80218, opis: "Marabu", ikona: "🍴" },
+            { ime: "Vinkovcima", lat: 45.28003, lng: 18.79908, opis: "Garfield", ikona: "🍕" },
+            { ime: "Vinkovcima", lat: 45.28975, lng: 18.80630, opis: "Quattro", ikona: "🍕" },
+            { ime: "Vinkovcima", lat: 45.28817, lng: 18.80529, opis: "Excellet pub", ikona: "☕" },
+            { ime: "Vinkovcima", lat: 45.29072, lng: 18.80499, opis: "Prvi poljubac", ikona: "💋" },
+            { ime: "Vinkovcima", lat: 45.28390, lng: 18.79730, opis: "Cibalia - trčanje", ikona: "⚽" },
+            { ime: "Vinkovcima", lat: 45.30000, lng: 18.80289, opis: "HZ", ikona: "🚂" },
+            { ime: "Vinkovcima", lat: 45.28982, lng: 18.80540, opis: "kebab..", ikona: "🍕" },
+
+            //OSIJEK
+            { ime: "Osijeku", lat: 45.55506, lng: 18.63708, opis: "CineStar, ne prečesto...", ikona: "🍿" },
+            { ime: "Osijeku", lat: 45.55851, lng: 18.68600, opis: "SKAC", ikona: "🕆" },
+            { ime: "Osijeku", lat: 45.56059, lng: 18.63744, opis: "KFC", ikona: "🍗" },
+            { ime: "Osijeku", lat: 45.56455, lng: 18.63572, opis: "MCDonalds 2", ikona: "🍔" },
+            { ime: "Osijeku", lat: 45.55051, lng: 18.69304, opis: "McDonalds, nekoliko puta godišnje ❤️", ikona: "🍔" },
+
+            //VUKOVAR
+            { ime: "Vukovaru", lat: 45.35302, lng: 19.00162, opis: "CineStar", ikona: "🍿" }
+        ];
+
+        gradovi.forEach(function (grad) {
+
+            var foodIcon = L.divIcon({
+                html: "<div style='font-size:24px'>" + (grad.ikona || "📍") + "</div>",
+                className: "",
+                iconSize: [30, 30]
+            });
+
+            L.marker([grad.lat, grad.lng], {
+                icon: foodIcon
+            })
+                .addTo(map)
+                .bindPopup("Bili smo u " + grad.ime + " ❤️<br>" + grad.opis);
+
+        });
 
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-<script>
-
-    var bounds = [
-    [42.3, 13.4],
-    [46.6, 19.5] 
-];
-
-
-    var map = L.map('map', {
-    maxBounds: bounds,
-    maxBoundsViscosity: 1.0
-}).setView([45.1, 15.2], 7);
-
-    
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap'
-    }).addTo(map);
-
-    
-    var gradovi = [
-
-        //TIPS: možda promijeniti boju lokacije po gradovima/po najčešćim lokacijama koje smo posjetili.
-
-
-        //#1.
-        {ime: "Donji Adnrijevci", lat: 45.18769, lng: 18.29701, opis:"Kraj križnog puta (09:30 - 18:00), 28km"},
-        {ime: "Slavonski Brod", lat: 45.15636, lng: 18.00701, opis:"Početak 20. Nadbiskupijskog križnog puta za mlade (21.3.2026.)"},
-        
-        //VINKOVCI
-        {ime: "Vinkovci", lat: 45.28511, lng: 18.79839, opis:"HNK Vinkovci"},
-        {ime: "Vinkovci", lat: 45.28911, lng: 18.80218, opis:"Marabu"},
-        {ime: "Vinkovci", lat: 45.28003, lng: 18.79908, opis:"Garfield"},
-        {ime: "Vinkovci", lat: 45.28975, lng: 18.80630, opis:"Quattro"},
-        {ime: "Vinkovci", lat: 45.28817, lng: 18.80529, opis:"Excellet pub"},
-        {ime: "Vinkovci", lat: 45.29072, lng: 18.80499, opis:"Prvi poljubac"},
-        {ime: "Vinkovci", lat: 45.28390, lng: 18.79730, opis:"Cibalia - trčanje"},
-        {ime: "Vinkovci", lat: 45.30000, lng: 18.80289, opis:"HZ"},
-        {ime: "Vinkovci", lat: 45.28982, lng: 18.80540, opis:"kebab.."},
-        
-        //OSIJEK
-        {ime: "Osijek", lat: 45.55506, lng: 18.63708, opis:"CineStar, ne prečesto..."},
-        {ime: "Osijek", lat: 45.55851, lng: 18.68600, opis:"SKAC"},
-        {ime: "Osijek", lat: 45.56059, lng: 18.63744, opis:"KFC"},
-        {ime: "Osijek", lat: 45.56455, lng: 18.63572, opis:"MCDonalds 2"},
-        {ime: "Osijek", lat: 45.55051, lng: 18.69304, opis:"McDonalds, nekoliko puta godišnje ❤️"},
-        
-        //VUKOVAR
-        {ime: "Vukovar", lat: 45.35302, lng: 19.00162, opis:"CineStar"}
-    ];
-
-    
-    gradovi.forEach(function(grad) {
-        L.marker([grad.lat, grad.lng])
-            .addTo(map)
-            .bindPopup("Bili smo u " + grad.ime + " ❤️" + "<br>" + grad.opis);
-    });
-    
-</script>
+    </script>
 
 </body>
+
 </html>
